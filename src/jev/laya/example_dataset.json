@@ -1,4 +1,3 @@
-// uv run python src/laya/train.py --dataset_path src/laya/example_dataset.json --output_dir ./my_laya_model --epochs 4
 [
   {
     "id": "case_001",

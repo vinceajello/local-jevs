@@ -1,0 +1,401 @@
+[
+  {
+    "id": "bench_001",
+    "state": {
+      "from": "marcus.vance@fintech-pay.com",
+      "subject": "URGENT: Stripe webhook failures blocking merchant settlement",
+      "body": "Since 08:30 UTC all automated payouts are failing with HTTP 502 Bad Gateway against the gateway microservice. Over 1,200 merchant transfers are in pending retry state. We need the payments infrastructure team to intervene."
+    },
+    "questions": {
+      "department": {
+        "type": "choice",
+        "instructions": "Which department should handle this ticket?",
+        "criteria": {
+          "infrastructure": "server failures, microservice outages, database drops, network errors",
+          "billing": "invoice requests, card disputes, merchant fees",
+          "sales": "enterprise pipeline, volume discount inquiries",
+          "compliance": "KYC, regulatory audit requests, sanctions screening"
+        }
+      },
+      "urgency": {
+        "type": "score",
+        "instructions": "Rate the severity level of this incident.",
+        "criteria": [
+          "level 0: low priority inquiry / documentation question",
+          "level 1: minor bug with standard workaround",
+          "level 2: partial degradation affecting subset of users",
+          "level 3: catastrophic service disruption with direct financial loss"
+        ]
+      },
+      "requires_escalation": {
+        "type": "noul",
+        "instructions": "Does this issue require page-duty on-call escalation?"
+      },
+      "financial_impact": {
+        "type": "noul",
+        "instructions": "Does this incident directly impede or endanger financial transactions?"
+      }
+    },
+    "gold": {
+      "department": {
+        "choice": "infrastructure",
+        "probabilities": {
+          "infrastructure": 0.96,
+          "billing": 0.03,
+          "sales": 0.005,
+          "compliance": 0.005
+        }
+      },
+      "urgency": {
+        "score": 3,
+        "probabilities": {
+          "0": 0.0,
+          "1": 0.01,
+          "2": 0.08,
+          "3": 0.91
+        }
+      },
+      "requires_escalation": {
+        "noul": 0.98,
+        "probabilities": {
+          "false": 0.02,
+          "true": 0.98
+        }
+      },
+      "financial_impact": {
+        "noul": 0.97,
+        "probabilities": {
+          "false": 0.03,
+          "true": 0.97
+        }
+      }
+    }
+  },
+  {
+    "id": "bench_002",
+    "state": {
+      "from": "claire.chen@orbitscale.io",
+      "subject": "Invoice #8891 shows double seat count for Q3",
+      "body": "Hi Accounts team, our invoice received yesterday lists 500 enterprise seats at $45/mo, but our actual contracted provisioning is 250 seats. Please issue a corrected credit memo and updated invoice."
+    },
+    "questions": {
+      "department": {
+        "type": "choice",
+        "instructions": "Which department should handle this request?",
+        "criteria": {
+          "infrastructure": "server failures, microservice outages, database drops",
+          "billing": "invoice requests, overbilling, payment methods, credit adjustments",
+          "sales": "new contracts, demo requests, account executive contact",
+          "compliance": "regulatory issues, privacy terms"
+        }
+      },
+      "urgency": {
+        "type": "score",
+        "instructions": "Rate the operational urgency of this request.",
+        "criteria": [
+          "level 0: low priority / standard turnaround",
+          "level 1: moderate importance / requires attention within business day",
+          "level 2: urgent / impending payment deadline or threat of service cancellation",
+          "level 3: emergency / widespread outage"
+        ]
+      },
+      "requires_escalation": {
+        "type": "noul",
+        "instructions": "Does this request require emergency engineering escalation?"
+      },
+      "churn_risk": {
+        "type": "noul",
+        "instructions": "Does the customer explicitly threaten cancellation or termination of their account?"
+      }
+    },
+    "gold": {
+      "department": {
+        "choice": "billing",
+        "probabilities": {
+          "infrastructure": 0.01,
+          "billing": 0.96,
+          "sales": 0.025,
+          "compliance": 0.005
+        }
+      },
+      "urgency": {
+        "score": 1,
+        "probabilities": {
+          "0": 0.10,
+          "1": 0.82,
+          "2": 0.08,
+          "3": 0.0
+        }
+      },
+      "requires_escalation": {
+        "noul": 0.02,
+        "probabilities": {
+          "false": 0.98,
+          "true": 0.02
+        }
+      },
+      "churn_risk": {
+        "noul": 0.03,
+        "probabilities": {
+          "false": 0.97,
+          "true": 0.03
+        }
+      }
+    }
+  },
+  {
+    "id": "bench_003",
+    "state": {
+      "from": "david.ross@acmecorp.com",
+      "subject": "Immediate cancellation and refund demand - Unacceptable downtime",
+      "body": "Your platform has been unstable all week. If our full subscription fees for the past 6 months are not credited back within 48 hours, our legal counsel will file formal breach of SLA proceedings and we are migrating all workloads to AWS today."
+    },
+    "questions": {
+      "department": {
+        "type": "choice",
+        "instructions": "Route this sensitive correspondence to the appropriate department.",
+        "criteria": {
+          "retention": "executive customer retention, escalations, churn prevention",
+          "billing": "standard invoicing and receipts",
+          "sales": "inbound prospecting and quote generation",
+          "technical": "routine bug reporting"
+        }
+      },
+      "urgency": {
+        "type": "score",
+        "instructions": "Rate the customer risk urgency score.",
+        "criteria": [
+          "level 0: calm, routine communication",
+          "level 1: mildly dissatisfied",
+          "level 2: highly agitated with active cancellation / refund ultimatum",
+          "level 3: legal proceedings actively filed in court"
+        ]
+      },
+      "churn_risk": {
+        "type": "noul",
+        "instructions": "Is there an explicit, imminent risk of customer churn?"
+      },
+      "legal_threat": {
+        "type": "noul",
+        "instructions": "Does the message explicitly threaten legal action or breach of contract claims?"
+      }
+    },
+    "gold": {
+      "department": {
+        "choice": "retention",
+        "probabilities": {
+          "retention": 0.93,
+          "billing": 0.05,
+          "sales": 0.01,
+          "technical": 0.01
+        }
+      },
+      "urgency": {
+        "score": 2,
+        "probabilities": {
+          "0": 0.01,
+          "1": 0.04,
+          "2": 0.90,
+          "3": 0.05
+        }
+      },
+      "churn_risk": {
+        "noul": 0.97,
+        "probabilities": {
+          "false": 0.03,
+          "true": 0.97
+        }
+      },
+      "legal_threat": {
+        "noul": 0.94,
+        "probabilities": {
+          "false": 0.06,
+          "true": 0.94
+        }
+      }
+    }
+  },
+  {
+    "id": "bench_004",
+    "state": {
+      "from": "elena.rostova@cyberguard.net",
+      "subject": "Inquiry regarding SOC2 Type II report and GDPR subprocessor list",
+      "body": "Good morning. We are currently conducting our annual vendor vendor assessment. Could your team please provide your latest SOC2 Type II certification, penetration test summary, and the list of your sub-processors?"
+    },
+    "questions": {
+      "department": {
+        "type": "choice",
+        "instructions": "Which department handles security and compliance documentation requests?",
+        "criteria": {
+          "security_compliance": "SOC2, ISO27001, GDPR, DPA, security audits, privacy policy",
+          "billing": "invoices, payment processing",
+          "support": "technical troubleshooting, software bugs",
+          "marketing": "press inquiries, event sponsorships"
+        }
+      },
+      "urgency": {
+        "type": "score",
+        "instructions": "Rate the urgency score of this compliance inquiry.",
+        "criteria": [
+          "level 0: standard vendor review questionnaire with flexible deadline",
+          "level 1: audit with upcoming compliance deadline within 2 weeks",
+          "level 2: critical blocking issue for closed security review",
+          "level 3: active security breach / emergency data leak"
+        ]
+      },
+      "requires_escalation": {
+        "type": "noul",
+        "instructions": "Does this request indicate an active data breach or emergency incident?"
+      }
+    },
+    "gold": {
+      "department": {
+        "choice": "security_compliance",
+        "probabilities": {
+          "security_compliance": 0.98,
+          "billing": 0.005,
+          "support": 0.01,
+          "marketing": 0.005
+        }
+      },
+      "urgency": {
+        "score": 0,
+        "probabilities": {
+          "0": 0.89,
+          "1": 0.10,
+          "2": 0.01,
+          "3": 0.0
+        }
+      },
+      "requires_escalation": {
+        "noul": 0.01,
+        "probabilities": {
+          "false": 0.99,
+          "true": 0.01
+        }
+      }
+    }
+  },
+  {
+    "id": "bench_005",
+    "state": {
+      "from": "tetsuo.shindo@neo-mobility.jp",
+      "subject": "Enterprise tier custom SLA and dedicated VPC pricing",
+      "body": "Hello, we are evaluating your platform for our fleet logistics software across 12,000 connected vehicles. We require 99.99% uptime SLA and single-tenant VPC deployment in Tokyo. Could we schedule a call with your enterprise sales lead?"
+    },
+    "questions": {
+      "department": {
+        "type": "choice",
+        "instructions": "Which department should be assigned this high-value inbound lead?",
+        "criteria": {
+          "enterprise_sales": "high volume contracts, custom SLAs, private VPC deployments, enterprise RFP",
+          "customer_support": "tier-1 support, password resets",
+          "billing": "standard credit card subscriptions",
+          "legal": "trademark disputes"
+        }
+      },
+      "urgency": {
+        "type": "score",
+        "instructions": "Score the opportunity priority level.",
+        "criteria": [
+          "level 0: general curiosity",
+          "level 1: qualified enterprise pipeline prospect",
+          "level 2: high priority strategic account decision-maker",
+          "level 3: immediate same-day closure request"
+        ]
+      },
+      "enterprise_lead": {
+        "type": "noul",
+        "instructions": "Is this inquiry a high-value enterprise sales lead?"
+      }
+    },
+    "gold": {
+      "department": {
+        "choice": "enterprise_sales",
+        "probabilities": {
+          "enterprise_sales": 0.97,
+          "customer_support": 0.01,
+          "billing": 0.01,
+          "legal": 0.01
+        }
+      },
+      "urgency": {
+        "score": 2,
+        "probabilities": {
+          "0": 0.02,
+          "1": 0.20,
+          "2": 0.74,
+          "3": 0.04
+        }
+      },
+      "enterprise_lead": {
+        "noul": 0.99,
+        "probabilities": {
+          "false": 0.01,
+          "true": 0.99
+        }
+      }
+    }
+  },
+  {
+    "id": "bench_006",
+    "state": {
+      "from": "maya.lin@datasystems.com",
+      "subject": "NullPointerException when exporting report to CSV format",
+      "body": "When navigating to Analytics -> Custom Reports and selecting date ranges greater than 90 days, clicking 'Export CSV' throws a 500 error showing java.lang.NullPointerException in the console. Smaller date ranges work fine."
+    },
+    "questions": {
+      "department": {
+        "type": "choice",
+        "instructions": "Which team should investigate this application error?",
+        "criteria": {
+          "engineering": "software bugs, runtime exceptions, UI errors, export defects",
+          "billing": "invoicing questions and charge issues",
+          "sales": "subscription upgrades and sales demos",
+          "hr": "recruiting and hiring inquiries"
+        }
+      },
+      "urgency": {
+        "type": "score",
+        "instructions": "Assess the operational severity of this bug.",
+        "criteria": [
+          "level 0: cosmetic UI issue",
+          "level 1: isolated functional bug with workaround (use shorter date ranges)",
+          "level 2: broad service impairment",
+          "level 3: complete system failure"
+        ]
+      },
+      "reproducible_bug": {
+        "type": "noul",
+        "instructions": "Does the ticket report a specific software defect or runtime exception?"
+      }
+    },
+    "gold": {
+      "department": {
+        "choice": "engineering",
+        "probabilities": {
+          "engineering": 0.98,
+          "billing": 0.01,
+          "sales": 0.005,
+          "hr": 0.005
+        }
+      },
+      "urgency": {
+        "score": 1,
+        "probabilities": {
+          "0": 0.05,
+          "1": 0.88,
+          "2": 0.07,
+          "3": 0.0
+        }
+      },
+      "reproducible_bug": {
+        "noul": 0.98,
+        "probabilities": {
+          "false": 0.02,
+          "true": 0.98
+        }
+      }
+    }
+  }
+]
