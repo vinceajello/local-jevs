@@ -1,0 +1,483 @@
+// uv run python src/laya/train.py --dataset_path src/laya/example_dataset.json --output_dir ./my_laya_model --epochs 4
+[
+  {
+    "id": "case_001",
+    "state": {
+      "from": "sarah.connor@cyberdyne.io",
+      "subject": "Critical: Production database connection timeout after update",
+      "body": "Since 01:00 AM UTC our US-East database cluster is rejecting connections with error 504. All checkout transactions are failing. Need tier-3 infrastructure engineer right away."
+    },
+    "questions": {
+      "department": {
+        "type": "choice",
+        "instructions": "Which department should handle this ticket?",
+        "criteria": {
+          "technical": "infrastructure outages, database failures, API errors",
+          "billing": "invoices, payment processing, subscriptions, refunds",
+          "sales": "enterprise quotes, contract renewals, upgrades",
+          "general": "account settings, general inquiries"
+        }
+      },
+      "urgency": {
+        "type": "score",
+        "instructions": "Rate the operational urgency of this issue.",
+        "criteria": [
+          "level 0: low priority / non-urgent inquiry",
+          "level 1: normal business impact",
+          "level 2: significant impact / partial outage",
+          "level 3: critical blocker / widespread total outage"
+        ]
+      },
+      "requires_escalation": {
+        "type": "noul",
+        "instructions": "Does this issue require immediate emergency on-call escalation?"
+      }
+    },
+    "gold": {
+      "department": {
+        "choice": "technical",
+        "probabilities": {
+          "technical": 0.97,
+          "billing": 0.01,
+          "sales": 0.01,
+          "general": 0.01
+        }
+      },
+      "urgency": {
+        "score": 3,
+        "probabilities": {
+          "0": 0.0,
+          "1": 0.01,
+          "2": 0.09,
+          "3": 0.90
+        }
+      },
+      "requires_escalation": {
+        "noul": 0.98,
+        "probabilities": {
+          "false": 0.02,
+          "true": 0.98
+        }
+      }
+    }
+  },
+  {
+    "id": "case_002",
+    "state": {
+      "from": "accounting@globex.org",
+      "subject": "Double charged for March subscription invoice #INV-99321",
+      "body": "We noticed two identical credit card charges of $2,400 on March 15th for our annual team license. Please void the duplicate and provide an updated statement."
+    },
+    "questions": {
+      "department": {
+        "type": "choice",
+        "instructions": "Which department should handle this ticket?",
+        "criteria": {
+          "technical": "infrastructure outages, database failures, API errors",
+          "billing": "invoices, payment processing, subscriptions, refunds",
+          "sales": "enterprise quotes, contract renewals, upgrades",
+          "general": "account settings, general inquiries"
+        }
+      },
+      "urgency": {
+        "type": "score",
+        "instructions": "Rate the operational urgency of this issue.",
+        "criteria": [
+          "level 0: low priority / non-urgent inquiry",
+          "level 1: normal business impact",
+          "level 2: significant impact / partial outage",
+          "level 3: critical blocker / widespread total outage"
+        ]
+      },
+      "refund_requested": {
+        "type": "noul",
+        "instructions": "Did the customer explicitly ask for a refund, credit, or charge reversal?"
+      }
+    },
+    "gold": {
+      "department": {
+        "choice": "billing",
+        "probabilities": {
+          "technical": 0.01,
+          "billing": 0.96,
+          "sales": 0.02,
+          "general": 0.01
+        }
+      },
+      "urgency": {
+        "score": 1,
+        "probabilities": {
+          "0": 0.15,
+          "1": 0.72,
+          "2": 0.11,
+          "3": 0.02
+        }
+      },
+      "refund_requested": {
+        "noul": 0.99,
+        "probabilities": {
+          "false": 0.01,
+          "true": 0.99
+        }
+      }
+    }
+  },
+  {
+    "id": "case_003",
+    "state": {
+      "from": "vp.procurement@megacorp.com",
+      "subject": "Request for proposal: 1,500 enterprise seats expansion",
+      "body": "We are expanding our deployment from 100 to 1,500 seats across EMEA and APAC. Can we schedule an executive call this Thursday with your enterprise sales lead?"
+    },
+    "questions": {
+      "department": {
+        "type": "choice",
+        "instructions": "Which department should handle this ticket?",
+        "criteria": {
+          "technical": "infrastructure outages, database failures, API errors",
+          "billing": "invoices, payment processing, subscriptions, refunds",
+          "sales": "enterprise quotes, contract renewals, upgrades",
+          "general": "account settings, general inquiries"
+        }
+      },
+      "urgency": {
+        "type": "score",
+        "instructions": "Rate the operational urgency of this issue.",
+        "criteria": [
+          "level 0: low priority / non-urgent inquiry",
+          "level 1: normal business impact",
+          "level 2: significant impact / partial outage",
+          "level 3: critical blocker / widespread total outage"
+        ]
+      },
+      "churn_risk": {
+        "type": "noul",
+        "instructions": "Is the customer threatening to leave or cancel?"
+      }
+    },
+    "gold": {
+      "department": {
+        "choice": "sales",
+        "probabilities": {
+          "technical": 0.01,
+          "billing": 0.03,
+          "sales": 0.95,
+          "general": 0.01
+        }
+      },
+      "urgency": {
+        "score": 1,
+        "probabilities": {
+          "0": 0.20,
+          "1": 0.68,
+          "2": 0.10,
+          "3": 0.02
+        }
+      },
+      "churn_risk": {
+        "noul": 0.01,
+        "probabilities": {
+          "false": 0.99,
+          "true": 0.01
+        }
+      }
+    }
+  },
+  {
+    "id": "case_004",
+    "state": "Hey support, I forgot how to export our monthly activity reports into CSV format from the new dashboard. Could you point me to the docs link? Thanks!",
+    "questions": {
+      "department": {
+        "type": "choice",
+        "instructions": "Which department should handle this ticket?",
+        "criteria": {
+          "technical": "infrastructure outages, database failures, API errors",
+          "billing": "invoices, payment processing, subscriptions, refunds",
+          "sales": "enterprise quotes, contract renewals, upgrades",
+          "general": "account settings, general inquiries"
+        }
+      },
+      "urgency": {
+        "type": "score",
+        "instructions": "Rate the operational urgency of this issue.",
+        "criteria": [
+          "level 0: low priority / non-urgent inquiry",
+          "level 1: normal business impact",
+          "level 2: significant impact / partial outage",
+          "level 3: critical blocker / widespread total outage"
+        ]
+      },
+      "requires_escalation": {
+        "type": "noul",
+        "instructions": "Does this issue require immediate emergency on-call escalation?"
+      }
+    },
+    "gold": {
+      "department": {
+        "choice": "general",
+        "probabilities": {
+          "technical": 0.12,
+          "billing": 0.01,
+          "sales": 0.02,
+          "general": 0.85
+        }
+      },
+      "urgency": {
+        "score": 0,
+        "probabilities": {
+          "0": 0.88,
+          "1": 0.10,
+          "2": 0.02,
+          "3": 0.0
+        }
+      },
+      "requires_escalation": {
+        "noul": 0.01,
+        "probabilities": {
+          "false": 0.99,
+          "true": 0.01
+        }
+      }
+    }
+  },
+  {
+    "id": "case_005",
+    "state": {
+      "from": "cto@fintechstartup.co",
+      "subject": "Repeated downtime - considering canceling contract and switching to competitor",
+      "body": "This is the third outage this week during market opening hours. We cannot tolerate this level of instability. If this is not resolved today, we are terminating our annual contract immediately."
+    },
+    "questions": {
+      "department": {
+        "type": "choice",
+        "instructions": "Which department should handle this ticket?",
+        "criteria": {
+          "technical": "infrastructure outages, database failures, API errors",
+          "billing": "invoices, payment processing, subscriptions, refunds",
+          "sales": "enterprise quotes, contract renewals, upgrades",
+          "general": "account settings, general inquiries"
+        }
+      },
+      "urgency": {
+        "type": "score",
+        "instructions": "Rate the operational urgency of this issue.",
+        "criteria": [
+          "level 0: low priority / non-urgent inquiry",
+          "level 1: normal business impact",
+          "level 2: significant impact / partial outage",
+          "level 3: critical blocker / widespread total outage"
+        ]
+      },
+      "churn_risk": {
+        "type": "noul",
+        "instructions": "Is the customer threatening to leave or cancel?"
+      }
+    },
+    "gold": {
+      "department": {
+        "choice": "technical",
+        "probabilities": {
+          "technical": 0.82,
+          "billing": 0.02,
+          "sales": 0.12,
+          "general": 0.04
+        }
+      },
+      "urgency": {
+        "score": 3,
+        "probabilities": {
+          "0": 0.01,
+          "1": 0.05,
+          "2": 0.20,
+          "3": 0.74
+        }
+      },
+      "churn_risk": {
+        "noul": 0.97,
+        "probabilities": {
+          "false": 0.03,
+          "true": 0.97
+        }
+      }
+    }
+  },
+  {
+    "id": "case_006",
+    "state": {
+      "user_id": "usr_9128",
+      "plan": "starter",
+      "message": "Can I pay for the annual plan using wire transfer or ACH instead of credit card?"
+    },
+    "questions": {
+      "department": {
+        "type": "choice",
+        "instructions": "Which department should handle this ticket?",
+        "criteria": {
+          "technical": "infrastructure outages, database failures, API errors",
+          "billing": "invoices, payment processing, subscriptions, refunds",
+          "sales": "enterprise quotes, contract renewals, upgrades",
+          "general": "account settings, general inquiries"
+        }
+      },
+      "urgency": {
+        "type": "score",
+        "instructions": "Rate the operational urgency of this issue.",
+        "criteria": [
+          "level 0: low priority / non-urgent inquiry",
+          "level 1: normal business impact",
+          "level 2: significant impact / partial outage",
+          "level 3: critical blocker / widespread total outage"
+        ]
+      },
+      "refund_requested": {
+        "type": "noul",
+        "instructions": "Did the customer explicitly ask for a refund, credit, or charge reversal?"
+      }
+    },
+    "gold": {
+      "department": {
+        "choice": "billing",
+        "probabilities": {
+          "technical": 0.01,
+          "billing": 0.92,
+          "sales": 0.05,
+          "general": 0.02
+        }
+      },
+      "urgency": {
+        "score": 0,
+        "probabilities": {
+          "0": 0.75,
+          "1": 0.22,
+          "2": 0.03,
+          "3": 0.0
+        }
+      },
+      "refund_requested": {
+        "noul": 0.02,
+        "probabilities": {
+          "false": 0.98,
+          "true": 0.02
+        }
+      }
+    }
+  },
+  {
+    "id": "case_007",
+    "state": {
+      "endpoint": "/api/v2/webhooks",
+      "error_code": "SSL_CERT_UNTRUSTED",
+      "details": "Our server rejects your webhook payloads with certificate validation failure on domain api.partner.net"
+    },
+    "questions": {
+      "department": {
+        "type": "choice",
+        "instructions": "Which department should handle this ticket?",
+        "criteria": {
+          "technical": "infrastructure outages, database failures, API errors",
+          "billing": "invoices, payment processing, subscriptions, refunds",
+          "sales": "enterprise quotes, contract renewals, upgrades",
+          "general": "account settings, general inquiries"
+        }
+      },
+      "urgency": {
+        "type": "score",
+        "instructions": "Rate the operational urgency of this issue.",
+        "criteria": [
+          "level 0: low priority / non-urgent inquiry",
+          "level 1: normal business impact",
+          "level 2: significant impact / partial outage",
+          "level 3: critical blocker / widespread total outage"
+        ]
+      },
+      "requires_escalation": {
+        "type": "noul",
+        "instructions": "Does this issue require immediate emergency on-call escalation?"
+      }
+    },
+    "gold": {
+      "department": {
+        "choice": "technical",
+        "probabilities": {
+          "technical": 0.96,
+          "billing": 0.01,
+          "sales": 0.01,
+          "general": 0.02
+        }
+      },
+      "urgency": {
+        "score": 2,
+        "probabilities": {
+          "0": 0.03,
+          "1": 0.20,
+          "2": 0.65,
+          "3": 0.12
+        }
+      },
+      "requires_escalation": {
+        "noul": 0.25,
+        "probabilities": {
+          "false": 0.75,
+          "true": 0.25
+        }
+      }
+    }
+  },
+  {
+    "id": "case_008",
+    "state": "Hi team! We love the new analytics features. Are there any discounts available for registered non-profit educational foundations?",
+    "questions": {
+      "department": {
+        "type": "choice",
+        "instructions": "Which department should handle this ticket?",
+        "criteria": {
+          "technical": "infrastructure outages, database failures, API errors",
+          "billing": "invoices, payment processing, subscriptions, refunds",
+          "sales": "enterprise quotes, contract renewals, upgrades",
+          "general": "account settings, general inquiries"
+        }
+      },
+      "urgency": {
+        "type": "score",
+        "instructions": "Rate the operational urgency of this issue.",
+        "criteria": [
+          "level 0: low priority / non-urgent inquiry",
+          "level 1: normal business impact",
+          "level 2: significant impact / partial outage",
+          "level 3: critical blocker / widespread total outage"
+        ]
+      },
+      "churn_risk": {
+        "type": "noul",
+        "instructions": "Is the customer threatening to leave or cancel?"
+      }
+    },
+    "gold": {
+      "department": {
+        "choice": "sales",
+        "probabilities": {
+          "technical": 0.02,
+          "billing": 0.10,
+          "sales": 0.85,
+          "general": 0.03
+        }
+      },
+      "urgency": {
+        "score": 0,
+        "probabilities": {
+          "0": 0.85,
+          "1": 0.13,
+          "2": 0.02,
+          "3": 0.0
+        }
+      },
+      "churn_risk": {
+        "noul": 0.01,
+        "probabilities": {
+          "false": 0.99,
+          "true": 0.01
+        }
+      }
+    }
+  }
+]
